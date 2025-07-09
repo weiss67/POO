@@ -1,0 +1,46 @@
+package exercices.niv1;
+
+public class Bottle {
+
+    // Attributs (états)
+    private String container; //  * Liquide (Eau,Coca, Jus d'orange)
+    private int centiliter; //  * quantité (en cl)
+    private boolean open; //  * Est ouvert ( Oui ou non)
+    private boolean empty; //  * Est vide ( Oui ou non)
+
+    //construteur
+    public Bottle(String container, int centiliter, Boolean open, Boolean empty){
+        this.container = container;
+        this.centiliter = centiliter;
+        this.open = open;
+        this.empty = empty;
+    }
+
+    //méthodes voir pour en ajouter d'autres
+    public void Open(){
+        open = true;
+        System.out.println("La bouteille contenant du "+container+" au volume de "+centiliter+" est ouverte.");
+    }
+
+    public void Drink(int drinked){
+        if (open){
+        System.out.println("Vous êtes en train de boire la bouteille contenant du "+container+" au volume de "+centiliter+".");
+
+        // voir pour mettre une function qu'on puisse choisir pour boir e la quantité qu'on veut boire.
+
+        centiliter = centiliter - drinked;
+        System.out.println("La bouteille contenant du "+container+" est au volume de "+centiliter+".");
+        }else{
+            System.out.println("La bouteille contenant du "+container+" au volume de "+centiliter+" n'est pas ouverte.");
+        }
+    }
+
+    public void Close(){
+        open = false;
+        System.out.println("La bouteille contenant du "+container+" au volume de "+centiliter+" est fermée.");
+    }
+
+    public void show(){
+        System.out.println("La bouteille contenant du "+container+" est actuellement au volume de "+centiliter+".");
+    }
+}

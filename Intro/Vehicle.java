@@ -1,4 +1,4 @@
-//package Intro;
+package Intro;
 
 public class Vehicle {
 
@@ -25,8 +25,4 @@ public class Vehicle {
         System.out.println("Le modèle "+model+" de la marque "+mark+" a le moteur démarré désormais !");
 
     }
-
-
-
-
 }
