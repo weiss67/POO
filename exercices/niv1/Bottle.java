@@ -1,5 +1,6 @@
 package exercices.niv1;
 
+import java.util.Random;
 import methods.myfunctions;
 
 public class Bottle {
@@ -45,7 +46,15 @@ public class Bottle {
         System.out.println("La bouteille contenant du "+container+" au volume de "+centiliter+" est fermée.");
     }
 
-    public void show(){
+    public void Show(){
         System.out.println("La bouteille contenant du "+container+" est actuellement au volume de "+centiliter+".");
+    }
+
+    public void Break(){
+        Random random = new Random();
+        if(random.nextBoolean()){
+            myfunctions.rwkTxtString("Oups! la bouteille s'est vidé accidentellement", false, false);
+            centiliter = 0;
+        }
     }
 }

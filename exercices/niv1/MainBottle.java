@@ -16,12 +16,12 @@ public class MainBottle {
             case "A": bCola.Open();
             return rwkSwitchCase(test); //relance le tableau de proposition avec index ajouté
             case "B": bCola.Close();
+            return rwkSwitchCase(test); 
+            case "Y": bCola.Drink(25); bCola.Break();
             return rwkSwitchCase(test);
-            case "Y": bCola.Drink(25);
+            case "W": bCola.Show();
             return rwkSwitchCase(test);
-            case "W": bCola.show();
-            return rwkSwitchCase(test);
-            case "X": myfunctions.rwkTxtString("Merci au revoir ! ", false, false); 
+            case "X": myfunctions.rwkTxtString("Merci au revoir ! ", false, false);
             return "Fin";
             default: myfunctions.rwkTxtString("Veuillez répondre que par (A), (B), (Y) ou (X)", false, true); 
             return rwkSwitchCase(test); //relancement de sécurité
