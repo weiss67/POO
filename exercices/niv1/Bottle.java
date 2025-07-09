@@ -1,5 +1,7 @@
 package exercices.niv1;
 
+import methods.myfunctions;
+
 public class Bottle {
 
     // Attributs (états)
@@ -24,12 +26,15 @@ public class Bottle {
 
     public void Drink(int drinked){
         if (open){
-        System.out.println("Vous êtes en train de boire la bouteille contenant du "+container+" au volume de "+centiliter+".");
-
+        //System.out.println("Vous êtes en train de boire la bouteille contenant du "+container+" au volume de "+centiliter+".");
+        drinked = myfunctions.rwkTxtInt("Vous buvez combien de centilitres ?");
         // voir pour mettre une function qu'on puisse choisir pour boir e la quantité qu'on veut boire.
-
-        centiliter = centiliter - drinked;
-        System.out.println("La bouteille contenant du "+container+" est au volume de "+centiliter+".");
+        if(drinked <= centiliter){
+            centiliter = centiliter - drinked;
+            System.out.println("La bouteille "+container+" est mtnt au volume de "+centiliter+".");
+        }else{
+            System.out.println("La bouteille "+container+" ne contient que "+centiliter+" cl.");
+        }
         }else{
             System.out.println("La bouteille contenant du "+container+" au volume de "+centiliter+" n'est pas ouverte.");
         }
