@@ -26,34 +26,34 @@ public class Bottle {
     }
 
     public void Drink(int drinked){
-        if (open){
+        if(open){
         //System.out.println("Vous êtes en train de boire la bouteille contenant du "+container+" au volume de "+centiliter+".");
         drinked = myfunctions.rwkTxtInt("Vous buvez combien de centilitres ?");
         // voir pour mettre une function qu'on puisse choisir pour boir e la quantité qu'on veut boire.
         if(drinked <= centiliter){
             centiliter = centiliter - drinked;
-            System.out.println("La bouteille "+container+" est mtnt au volume de "+centiliter+".");
+            System.out.println("La bouteille "+container+" est mtnt au volume de "+centiliter+" cl.");
         }else{
             System.out.println("La bouteille "+container+" ne contient que "+centiliter+" cl.");
         }
         }else{
-            System.out.println("La bouteille contenant du "+container+" au volume de "+centiliter+" n'est pas ouverte.");
+            System.out.println("La bouteille contenant du "+container+" au volume de "+centiliter+" cl n'est pas ouverte.");
         }
     }
 
     public void Close(){
         open = false;
-        System.out.println("La bouteille contenant du "+container+" au volume de "+centiliter+" est fermée.");
+        System.out.println("La bouteille contenant du "+container+" au volume de "+centiliter+" cl est fermée.");
     }
 
     public void Show(){
-        System.out.println("La bouteille contenant du "+container+" est actuellement au volume de "+centiliter+".");
+        System.out.println("La bouteille contenant du "+container+" est actuellement au volume de "+centiliter+" cl.");
     }
 
     public void Break(){
         Random random = new Random();
         if(random.nextBoolean()){
-            myfunctions.rwkTxtString("Oups! la bouteille s'est vidé accidentellement", false, false);
+            myfunctions.rwkTxtStringV2("Oups! la bouteille s'est vidé accidentellement", false, false);
             centiliter = 0;
         }
     }

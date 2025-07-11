@@ -11,7 +11,7 @@ public class MainBottle {
     }
 
     public static String rwkSwitchCase(String test){
-        String option = myfunctions.rwkTxtString("A pour ouvrir\nB pour fermer\nY pour boire\nW Voir la quantité actuelle\nX pour arreter d'intéragir", true, true);
+        String option = myfunctions.rwkTxtStringV2("\n(A) pour ouvrir\n(B) pour fermer\n(Y) pour boire\n(W) Voir la quantité actuelle\n(X) pour arreter d'intéragir", true, true);
         switch(option){// voir pour faire des nouvelles functions assez indépendants pour utiliser en tout
             case "A": bCola.Open();
             return rwkSwitchCase(test); //relance le tableau de proposition avec index ajouté
@@ -19,11 +19,12 @@ public class MainBottle {
             return rwkSwitchCase(test); 
             case "Y": bCola.Drink(25); bCola.Break();
             return rwkSwitchCase(test);
-            case "W": bCola.Show();
-            return rwkSwitchCase(test);
-            case "X": myfunctions.rwkTxtString("Merci au revoir ! ", false, false);
+            case "W": bCola.Show(); bCola.Break();
+            return rwkSwitchCase(test); 
+            case "X":  bCola.Break();
+            myfunctions.rwkTxtStringV2("Merci au revoir ! ", false, false);
             return "Fin";
-            default: myfunctions.rwkTxtString("Veuillez répondre que par (A), (B), (Y) ou (X)", false, true); 
+            default: myfunctions.rwkTxtStringV2("Veuillez répondre que par (A), (B), (Y) ou (X)", false, true); 
             return rwkSwitchCase(test); //relancement de sécurité
         }
     }
