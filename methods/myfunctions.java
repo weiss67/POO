@@ -523,7 +523,7 @@ public class myfunctions {
     public static String rwkTxtStringV2(String prompt, boolean keyboard, boolean touppercase){ 
         Scanner sc = new Scanner(System.in);
         System.out.print(prompt+"\n");
-        // Si clavier innatendu
+        // Si clavier non attendu
         if(!keyboard){
             // retourne en MAJ si touppercase true ou en normal
             return touppercase ? prompt.toUpperCase() : prompt;
