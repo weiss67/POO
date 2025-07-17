@@ -86,18 +86,40 @@ public class MainSimulator {
         };
 
         for (int i = 0; i < list_simulator.length; i++) {
+
+            // voir pour faire un random rainning (pluie)
+
             //Instruction donnée
+            //0.instructions, 1.speed, 2.gear, 3.expected_actions
             System.out.println(list_simulator[i][0]);
+            int speed_limited = (int) list_simulator[i][1];
+            int gear_expected = (int) list_simulator[i][2];
 
             // new = création d'un nouveau tableau
             rwkSwitchCase(false, new boolean[]{false, false, false});
 
-            Object[] get_simulator = DMW.GetSimulator();
+            // récupère les données des attributs
             //0.mark, 1.model, 2.power, 3.gear, 4.speed, 5.points
-            System.out.println("Vitesse actuelle : "+get_simulator[5]+" KM/H");
+            Object[] get_simulator = DMW.GetSimulator();
+            int gear = (int) get_simulator[3];
+            int speed = (int) get_simulator[4];
+
+            System.out.println("Vitesse actuelle : "+speed+" KM/H");
             
             System.out.println("Vitesse limitée : "+list_simulator[i][1]+" KM/H");
             System.out.println("Boîte à vitesse : "+list_simulator[i][2]+" G");
+
+
+
+
+            if(speed >= speed_limited){
+                System.out.println("Vitesse non respectée !");
+            }
+
+            if(gear > gear_expected || gear < gear_expected){
+                System.out.println("Moteur cassé car vous étiez en "+gear+" alors que c'était "+gear_expected+" attendue !" );
+            }
+
 
             // prévoir -- si instruction non suivie afin de relancer
         }
