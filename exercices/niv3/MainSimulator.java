@@ -8,7 +8,7 @@ public class MainSimulator {
     private static Simulator DMW;
     
     public static void main(String[] args){
-        DMW = new Simulator("BUGATTI", "Divo", 10, 0, 40);
+        DMW = new Simulator("BUGATTI", "Divo", 10, 0, 0, 40);
 
         //Object ???
         String[][] list_simulator = {
@@ -56,33 +56,33 @@ public class MainSimulator {
 
     public static String rwkSwitchCase(boolean CheckAll, boolean[] TurnSignals){
         
-        // check status 
-        myfunctions.rwkTxtStringV2("TurnSignals "+ TurnSignals[0], false, true);
-        myfunctions.rwkTxtStringV2("wheel[0] "+ TurnSignals[1], false, true);
-        myfunctions.rwkTxtStringV2("wheel[1] "+ TurnSignals[2], false, true);
-        
         String option = myfunctions.rwkTxtStringV2("\n(W) pour avoir toutes les touches en liste", true, true);
 
+        int newSpeed = 0; int letters = 1; int Numbers = 2;
         // Pattern = Entre A-a et Z-z en premier caractère puis deux chiffres
-        Pattern pattern = Pattern.compile("^([A-Za-z])(\\d{2})$");
+        Pattern pattern = Pattern.compile("^([A-Za-z]){"+letters+"}(\\d{"+Numbers+"})$");
         Matcher matcher = pattern.matcher(option);
 
         if(matcher.matches()){
-            // intègre à l'option pour la première lettre
+            // intègre à l'option pour la première lettre du permier group match
             option = matcher.group(1);
             
+            // Prends les chiffres matchés en 2ème group
             String numberStr = matcher.group(2);
-            int newSpeed = Integer.parseInt(numberStr);
+            newSpeed = Integer.parseInt(numberStr);
         }
 
-        switch(option){// voir pour faire des nouvelles functions assez indépendants pour utiliser en tout
-            case "Z": DMW.Accelerate(); // Accelerer
+        switch(option){
+            case "Z": if(newSpeed > 0){
+            DMW.Accelerate(newSpeed);} // Accelerer
             return rwkSwitchCase(CheckAll, TurnSignals); //relance le tableau de proposition avec index ajouté
 
-            case "D": DMW.Deccelerate(); // Decelerer
+            case "D": if(newSpeed > 0){
+            DMW.Deccelerate(newSpeed);} // Decelerer
             return rwkSwitchCase(CheckAll, TurnSignals);
 
-            case "F": DMW.Brake(); // Freiner 
+            case "F": if(newSpeed > 0){
+            DMW.Brake(newSpeed);} // Freiner 
             return rwkSwitchCase(CheckAll, TurnSignals);
 
             case "S": DMW.ToMoveBack(); // Marche arrière
@@ -94,19 +94,25 @@ public class MainSimulator {
             case "CD": DMW.ClutchDisabled(); // Débrayer Clutch Disabled
             return rwkSwitchCase(CheckAll, TurnSignals);
 
+            case "UG": DMW.Upgrade(); // Débrayer Clutch Disabled
+            return rwkSwitchCase(CheckAll, TurnSignals);
+
+            case "DG": DMW.Downgrade(); // Débrayer Clutch Disabled
+            return rwkSwitchCase(CheckAll, TurnSignals);
+
             case "T": DMW.Turn(CheckAll, TurnSignals); // Virer gauche/droite
             CheckAll = false; TurnSignals = new boolean[]{false, false, false}; // reset
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals); // OK
 
             case "CL": DMW.ChangeLanes(CheckAll, TurnSignals); // Changer de voie à gauche/droite
             CheckAll = false; TurnSignals = new boolean[]{false, false, false}; // reset
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals); // OK
 
             case "CA": CheckAll = DMW.CheckAll(); // Contrôle visibilité (Intérieur, extérieur, angles morts)
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals); // OK
 
             case "TS": TurnSignals = DMW.TurnSignals(); // Clignotant à gauche/droite
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals);  // OK
 
             case "HL": DMW.Headlights(); // Feu de croisement
             return rwkSwitchCase(CheckAll, TurnSignals);

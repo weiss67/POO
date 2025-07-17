@@ -108,14 +108,16 @@ public class Simulator {
     private String mark;    //
     private String model;   //  
     private int power;  //
+    private int gear;      //
     private int speed;      //
     private int points;      //
 
     //construteur
-    public Simulator(String mark, String model, int power, int speed, int points){
+    public Simulator(String mark, String model, int power, int gear, int speed, int points){
         this.mark = mark;
         this.model = model;
         this.power = power;
+        this.gear = gear;
         this.speed = speed;
         this.points = points;
     }
@@ -171,10 +173,32 @@ public class Simulator {
         return new boolean[] {ChangeLanes, wheel[0], wheel[1]};
     }
 
-    public static void Accelerate(){}
-    public static void Deccelerate(){}
-    public static void Brake(){}
+    public void Accelerate(int newSpeed){
+        speed += newSpeed;
+        myfunctions.rwkTxtStringV2("Vous êtes à "+speed+" KM/H !", false, false);
+    }
+    public void Deccelerate(int newSpeed){
+        speed -= newSpeed;
+        myfunctions.rwkTxtStringV2("Vous êtes à "+speed+" KM/H !", false, false);
+    }
+    public void Brake(int newSpeed){
+        speed -= newSpeed;
+        myfunctions.rwkTxtStringV2("Vous êtes à "+speed+" KM/H !", false, false);
+    }
+
     public static void ToMoveBack(){}
+
+    public void Upgrade(){
+        gear ++;
+        myfunctions.rwkTxtStringV2("Vous êtes en "+gear+" vitesse", false, false);
+    }
+
+    public void Downgrade(){
+        gear --;
+        myfunctions.rwkTxtStringV2("Vous êtes en "+gear+" vitesse", false, false);
+
+    }
+
     public static void ClutchEnabled(){}
     public static void ClutchDisabled(){}
     public static void Headlights(){}
