@@ -122,6 +122,10 @@ public class Simulator {
         this.points = points;
     }
 
+    public Object[] GetSimulator(){
+        return new Object[]{mark, model, power, gear, speed, points};
+    };
+
     public void CheckSecurity(boolean CheckAll, boolean[] TurnSignals){
         if(!TurnSignals[0]){
             points -= 2;
