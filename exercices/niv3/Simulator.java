@@ -126,6 +126,15 @@ public class Simulator {
         return new Object[]{mark, model, power, gear, speed, points};
     };
 
+    public void SetSimulator(String set_mark, String set_model, int set_power, int set_gear, int set_speed, int set_points){
+        mark = set_mark;
+        model = set_model;
+        power = set_power;
+        gear = set_gear;
+        speed = set_speed;
+        points = set_points;
+    };
+
     public void CheckSecurity(boolean CheckAll, boolean[] TurnSignals){
         if(!TurnSignals[0]){
             points -= 2;
@@ -203,10 +212,14 @@ public class Simulator {
 
     }
 
+    public boolean WindshieldWiper(){
+        boolean windshieldwiper;
+        return windshieldwiper = true;
+    }
+
     public static void ClutchEnabled(){}
     public static void ClutchDisabled(){}
     public static void Headlights(){}
-    public static void WindshieldWiper(){}
     public static void SignalsDetress(){}
     public static void Horn(){}
     public static void Arrest(){}

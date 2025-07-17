@@ -1,5 +1,6 @@
 package exercices.niv3;
 
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import methods.myfunctions;
@@ -15,9 +16,9 @@ public class MainSimulator {
             // instructions, expected_actions
 
             // instructions, speed, gear, expected_actions
-            {"Notification : Vous êtes sur une route limité à 30 km/h",
-            0,   0, ""},
-            {"1. Démarrer la voiture",     
+            //{"Notification : Vous êtes sur une route limité à 30 km/h",
+            //0,   0, ""},
+            {"Notification : Vous êtes sur une route limité à 30 km/h\n1. Démarrer la voiture",     
             30,    3,    ""},
             {"2. Continuer tout droit",     
             30,    3,    ""},
@@ -87,13 +88,18 @@ public class MainSimulator {
 
         for (int i = 0; i < list_simulator.length; i++) {
 
-            // voir pour faire un random rainning (pluie)
-
             //Instruction donnée
             //0.instructions, 1.speed, 2.gear, 3.expected_actions
-            System.out.println(list_simulator[i][0]);
+            System.out.println("\n"+list_simulator[i][0]);
             int speed_limited = (int) list_simulator[i][1];
             int gear_expected = (int) list_simulator[i][2];
+
+            // random rainning (pluie aléatoire pour chaque action)
+            boolean rainning = false; Random random = new Random();
+            if(random.nextBoolean()){
+                rainning = true;
+                myfunctions.rwkTxtStringV2("⚠️ Attention il pleut !", false, false);
+            }
 
             // new = création d'un nouveau tableau
             rwkSwitchCase(false, new boolean[]{false, false, false});
@@ -104,16 +110,20 @@ public class MainSimulator {
             int gear = (int) get_simulator[3];
             int speed = (int) get_simulator[4];
 
-            System.out.println("Vitesse actuelle : "+speed+" KM/H");
+            //System.out.println("Vitesse actuelle : "+speed+" KM/H");
             
-            System.out.println("Vitesse limitée : "+list_simulator[i][1]+" KM/H");
-            System.out.println("Boîte à vitesse : "+list_simulator[i][2]+" G");
+            if(rainning){ // baisse de 10 kilomètre la limitation en cas de pluie
+                if(speed_limited >= 10){ // vérifie si bien minimum 10KM/H
+                    speed_limited -= 10;
+                }
 
 
-
+                //WindshieldWiper
+                //Ne pas activer les essuie-glaces en cas de pluie : -5 points
+            }
 
             if(speed >= speed_limited){
-                System.out.println("Vitesse non respectée !");
+                System.out.println("Limitation à "+speed_limited+" KM/H non respectée ! ");
             }
 
             if(gear > gear_expected || gear < gear_expected){
