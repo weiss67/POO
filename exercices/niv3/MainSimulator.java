@@ -3,33 +3,11 @@ package exercices.niv3;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import methods.Ansi;
 import methods.myfunctions;
 
 public class MainSimulator {
     private static Simulator DMW;
-
-    public static final String ANSI_RESET = "\u001B[0m";
-
-    public static final String BOLD = "\u001B[1m";
-    public static final String ITALIC = "\u001B[3m";
-
-    // instructions
-    public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-
-    // Sanction
-    //public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
-    public static final String R = "\u001B[41m";
-
-    // message d'avertissement
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
-
-    // Réponse ou selection de l'utilisateur
-    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
-
-    // public static final String ANSI_BLUE = "\u001B[34m";
-    // public static final String ANSI_YELLOW = "\u001B[33m";
 
     public static void main(String[] args){
         String mark = "BUGATTI"; String model = "Divo"; int power = 10;
@@ -43,7 +21,7 @@ public class MainSimulator {
             // instructions, speed, gear, expected_actions
             //{"Notification : Vous êtes sur une route limité à 30 km/h",
             //0,   0, ""},
-            {" Notification : Vous êtes sur une route limité à 30 km/h \n 1. Démarrer la voiture ",     
+            {"Notification : Vous êtes sur une route limité à 30 km/h \n 1. Démarrer la voiture",     
             30,    3,    ""},
             {"2. Continuer tout droit",     
             30,    3,    ""},
@@ -113,9 +91,10 @@ public class MainSimulator {
 
         for (int i = 0; i < list_simulator.length; i++) {
 
+            myfunctions.rwkTxtStringV2("\n"+Ansi.NPW+"Score : "+(points)+" points."+Ansi.TVR, false, false);
             //Instruction donnée
             //0.instructions, 1.speed, 2.gear, 3.expected_actions
-            System.out.println("\n"+ANSI_WHITE_BACKGROUND+ANSI_BLACK+list_simulator[i][0]+ANSI_RESET);
+            System.out.println("\n"+Ansi.NWB+list_simulator[i][0]+Ansi.TVR);
             int speed_limited = (int) list_simulator[i][1];
             int gear_expected = (int) list_simulator[i][2];
 
@@ -123,7 +102,7 @@ public class MainSimulator {
             boolean rainning = false; Random random = new Random();
             if(random.nextBoolean()){
                 rainning = true;
-                myfunctions.rwkTxtStringV2(ANSI_YELLOW_BACKGROUND+ANSI_RED+BOLD+" (!) Attention il pleut ! "+ANSI_RESET, false, false);
+                myfunctions.rwkTxtStringV2(Ansi.NYR+"(!) Attention il pleut !"+Ansi.TVR, false, false);
             }
 
             // new = création d'un nouveau tableau
@@ -147,18 +126,21 @@ public class MainSimulator {
                 }
                 if(!windshieldwiper){
                     suivi_penality = 5;
-                    myfunctions.rwkTxtStringV2(R+" Ne pas activer les essuie-glaces en cas de pluie : -5 points \n Vous êtes à "+(get_points - suivi_penality)+" points. "+ANSI_RESET, false, false);
+                    myfunctions.rwkTxtStringV2(Ansi.NRW+"Ne pas activer les essuie-glaces en cas de pluie : -5 points"+Ansi.TVR, false, false);
+                    myfunctions.rwkTxtStringV2(Ansi.NPW+"Score "+(get_points - suivi_penality)+" points."+Ansi.TVR, false, false);
+
                 }   
             }
 
             if(get_speed > speed_limited){
                 suivi_penality = 2;
-                System.out.println(R+" Limitation à "+speed_limited+" KM/H non respectée car vous êtes à "+get_speed+" KM/H ! \n Excès de vitesse +5 km/h : -2 points \n Vous êtes à "+(get_points - suivi_penality)+" points. "+ANSI_RESET);
-                System.out.println(R+"Vous êtes à "+(get_points - suivi_penality)+" points. "+ANSI_RESET);
+                System.out.println(Ansi.NRW+"Limitation à "+speed_limited+" KM/H non respectée car vous êtes à "+get_speed+" KM/H !"+Ansi.TVR);
+                System.out.println(Ansi.NRW+"Excès de vitesse +5 km/h : -2 points."+Ansi.TVR);
+                System.out.println(Ansi.NPW+"Score "+(get_points - suivi_penality)+" points."+Ansi.TVR);
             }
 
             if(get_gear > gear_expected || get_gear < gear_expected){
-                System.out.println(R+" Moteur cassé car vous étiez en "+get_gear+" alors que c'était "+gear_expected+" attendue ! "+ANSI_RESET);
+                System.out.println(Ansi.NRW+"Moteur cassé car vous étiez en "+get_gear+" alors que c'était "+gear_expected+" attendue !"+Ansi.TVR);
             }
 
             DMW.SetSimulator(mark, model, power, get_gear, get_speed, (get_points - suivi_penality));
@@ -175,9 +157,10 @@ public class MainSimulator {
 
     public static boolean rwkSwitchCase(boolean CheckAll, boolean[] TurnSignals, boolean windshieldwiper){
         
-        String option = myfunctions.rwkTxtStringV2(ANSI_BLUE_BACKGROUND+ITALIC+" ", true, true);
+        //CBB+TVI+TVR
+        String option = myfunctions.rwkTxtStringV2(" ", true, true);
         
-        myfunctions.rwkTxtStringV2(" "+ANSI_RESET, false, false);
+        myfunctions.rwkTxtStringV2("", false, false);
 
         int newSpeed = 0; int letters = 1; int Numbers = 2;
         // Pattern = Entre A-a et Z-z en premier caractère puis deux chiffres
