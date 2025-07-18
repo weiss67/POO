@@ -7,9 +7,34 @@ import methods.myfunctions;
 
 public class MainSimulator {
     private static Simulator DMW;
-    
+
+    public static final String ANSI_RESET = "\u001B[0m";
+
+    public static final String BOLD = "\u001B[1m";
+    public static final String ITALIC = "\u001B[3m";
+
+    // instructions
+    public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+
+    // Sanction
+    //public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    public static final String R = "\u001B[41m";
+
+    // message d'avertissement
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+
+    // Réponse ou selection de l'utilisateur
+    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+
+    // public static final String ANSI_BLUE = "\u001B[34m";
+    // public static final String ANSI_YELLOW = "\u001B[33m";
+
     public static void main(String[] args){
-        DMW = new Simulator("BUGATTI", "Divo", 10, 0, 0, 40);
+        String mark = "BUGATTI"; String model = "Divo"; int power = 10;
+        int gear = 0; int speed = 0; int points = 40;
+        DMW = new Simulator(mark, model, power, gear, speed, points);
 
         //Object  String ???
         Object[][] list_simulator = {
@@ -18,7 +43,7 @@ public class MainSimulator {
             // instructions, speed, gear, expected_actions
             //{"Notification : Vous êtes sur une route limité à 30 km/h",
             //0,   0, ""},
-            {"Notification : Vous êtes sur une route limité à 30 km/h\n1. Démarrer la voiture",     
+            {" Notification : Vous êtes sur une route limité à 30 km/h \n 1. Démarrer la voiture ",     
             30,    3,    ""},
             {"2. Continuer tout droit",     
             30,    3,    ""},
@@ -90,7 +115,7 @@ public class MainSimulator {
 
             //Instruction donnée
             //0.instructions, 1.speed, 2.gear, 3.expected_actions
-            System.out.println("\n"+list_simulator[i][0]);
+            System.out.println("\n"+ANSI_WHITE_BACKGROUND+ANSI_BLACK+list_simulator[i][0]+ANSI_RESET);
             int speed_limited = (int) list_simulator[i][1];
             int gear_expected = (int) list_simulator[i][2];
 
@@ -98,17 +123,21 @@ public class MainSimulator {
             boolean rainning = false; Random random = new Random();
             if(random.nextBoolean()){
                 rainning = true;
-                myfunctions.rwkTxtStringV2("⚠️ Attention il pleut !", false, false);
+                myfunctions.rwkTxtStringV2(ANSI_YELLOW_BACKGROUND+ANSI_RED+BOLD+" (!) Attention il pleut ! "+ANSI_RESET, false, false);
             }
 
             // new = création d'un nouveau tableau
-            rwkSwitchCase(false, new boolean[]{false, false, false});
+            boolean windshieldwiper = rwkSwitchCase(false, new boolean[]{false, false, false}, false);
 
             // récupère les données des attributs
             //0.mark, 1.model, 2.power, 3.gear, 4.speed, 5.points
             Object[] get_simulator = DMW.GetSimulator();
-            int gear = (int) get_simulator[3];
-            int speed = (int) get_simulator[4];
+            int get_gear = (int) get_simulator[3];
+            int get_speed = (int) get_simulator[4];
+            int get_points = (int) get_simulator[5];
+
+            int suivi_penality = 0;
+            myfunctions.rwkTxtStringV2("CHECK POINTS "+get_points, false, false);
 
             //System.out.println("Vitesse actuelle : "+speed+" KM/H");
             
@@ -116,28 +145,39 @@ public class MainSimulator {
                 if(speed_limited >= 10){ // vérifie si bien minimum 10KM/H
                     speed_limited -= 10;
                 }
-
-
-                //WindshieldWiper
-                //Ne pas activer les essuie-glaces en cas de pluie : -5 points
+                if(!windshieldwiper){
+                    suivi_penality = 5;
+                    myfunctions.rwkTxtStringV2(R+" Ne pas activer les essuie-glaces en cas de pluie : -5 points \n Vous êtes à "+(get_points - suivi_penality)+" points. "+ANSI_RESET, false, false);
+                }   
             }
 
-            if(speed >= speed_limited){
-                System.out.println("Limitation à "+speed_limited+" KM/H non respectée ! ");
+            if(get_speed > speed_limited){
+                suivi_penality = 2;
+                System.out.println(R+" Limitation à "+speed_limited+" KM/H non respectée car vous êtes à "+get_speed+" KM/H ! \n Excès de vitesse +5 km/h : -2 points \n Vous êtes à "+(get_points - suivi_penality)+" points. "+ANSI_RESET);
+                System.out.println(R+"Vous êtes à "+(get_points - suivi_penality)+" points. "+ANSI_RESET);
             }
 
-            if(gear > gear_expected || gear < gear_expected){
-                System.out.println("Moteur cassé car vous étiez en "+gear+" alors que c'était "+gear_expected+" attendue !" );
+            if(get_gear > gear_expected || get_gear < gear_expected){
+                System.out.println(R+" Moteur cassé car vous étiez en "+get_gear+" alors que c'était "+gear_expected+" attendue ! "+ANSI_RESET);
             }
 
+            DMW.SetSimulator(mark, model, power, get_gear, get_speed, (get_points - suivi_penality));
 
             // prévoir -- si instruction non suivie afin de relancer
+
+            Object[] check_simulator = DMW.GetSimulator();
+            int check_points = (int) check_simulator[5];
+            myfunctions.rwkTxtStringV2("CHECK POINTS "+check_points, false, false);
+        
+            myfunctions.rwkTxtStringV2("Nous allons passer à l'instruction suivante ", false, false);
         }
     }
 
-    public static String rwkSwitchCase(boolean CheckAll, boolean[] TurnSignals){
+    public static boolean rwkSwitchCase(boolean CheckAll, boolean[] TurnSignals, boolean windshieldwiper){
         
-        String option = myfunctions.rwkTxtStringV2("\n(W) pour avoir toutes les touches en liste", true, true);
+        String option = myfunctions.rwkTxtStringV2(ANSI_BLUE_BACKGROUND+ITALIC+" ", true, true);
+        
+        myfunctions.rwkTxtStringV2(" "+ANSI_RESET, false, false);
 
         int newSpeed = 0; int letters = 1; int Numbers = 2;
         // Pattern = Entre A-a et Z-z en premier caractère puis deux chiffres
@@ -156,65 +196,66 @@ public class MainSimulator {
         switch(option){
             case "Z": if(newSpeed > 0){
             DMW.Accelerate(newSpeed);} // Accelerer
-            return rwkSwitchCase(CheckAll, TurnSignals); //relance le tableau de proposition avec index ajouté
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper); //relance le tableau de proposition avec index ajouté
 
             case "D": if(newSpeed > 0){
             DMW.Deccelerate(newSpeed);} // Decelerer
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "F": if(newSpeed > 0){
             DMW.Brake(newSpeed);} // Freiner 
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "S": DMW.ToMoveBack(); // Marche arrière
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "CE": DMW.ClutchEnabled(); // Embrayer Clutch Enabled
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "CD": DMW.ClutchDisabled(); // Débrayer Clutch Disabled
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "UG": DMW.Upgrade(); // upgrader
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "DG": DMW.Downgrade(); // retrograder
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "T": DMW.Turn(CheckAll, TurnSignals); // Virer gauche/droite
             CheckAll = false; TurnSignals = new boolean[]{false, false, false}; // reset
-            return rwkSwitchCase(CheckAll, TurnSignals); // OK
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper); // OK
 
             case "CL": DMW.ChangeLanes(CheckAll, TurnSignals); // Changer de voie à gauche/droite
             CheckAll = false; TurnSignals = new boolean[]{false, false, false}; // reset
-            return rwkSwitchCase(CheckAll, TurnSignals); // OK
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper); // OK
 
             case "CA": CheckAll = DMW.CheckAll(); // Contrôle visibilité (Intérieur, extérieur, angles morts)
-            return rwkSwitchCase(CheckAll, TurnSignals); // OK
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper); // OK
 
             case "TS": TurnSignals = DMW.TurnSignals(); // Clignotant à gauche/droite
-            return rwkSwitchCase(CheckAll, TurnSignals);  // OK
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);  // OK
 
             case "HL": DMW.Headlights(); // Feu de croisement
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
-            case "WW": DMW.WindshieldWiper(); // Essuie-glace
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            case "WW": windshieldwiper = DMW.WindshieldWiper(); // Essuie-glace
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "SD": DMW.SignalsDetress(); // Feu warning
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "H": DMW.Horn(); // Klaxon
-            return rwkSwitchCase(CheckAll, TurnSignals);
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             // case "W": DMW.AllInputs(); // voir pour mettre une listing de touche
             // return rwkSwitchCase(CheckAll, TurnSignals);
             case "X": DMW.Arrest(); // Arreter
-            return rwkSwitchCase(CheckAll, TurnSignals);
-            case "OK": myfunctions.rwkTxtStringV2("Nous allons passer à l'étape suivante ", false, false);
-            return "Fin";
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
+            case "OK":;
+            //return "Fin";
+            return windshieldwiper;
             default: myfunctions.rwkTxtStringV2("Veuillez répondre que par ???", false, true); 
-            return rwkSwitchCase(CheckAll, TurnSignals); //relancement de sécurité
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper); //relancement de sécurité
         }
     }
 }

@@ -84,15 +84,11 @@ import methods.myfunctions;
      * Bonus : Rajouter un système de points pour évaluer votre conduite, certaines erreurs ne sont pas éliminatoires mais vous feront perdre des points.
      * par exemple :
      * 
-     * // speed
-     * - Faire un excès de vitesse +5 km/h : -2 points
-     * 
      * - Ne pas céder le passage : -3 points
      * - Brûler un feu orange : -5 points
      * 
      * - Ne pas mettre de feu de croisement dans un tunnel : -2 points
      * 
-     * - Ne pas activer les essuie-glaces en cas de pluie : -5 points
      * - Ne pas ralentir avant un dos d'âne : -2 points
      * 
      * la pluie doit tomber aléatoirement pendant le test de conduite, si la pluie tombe, 
