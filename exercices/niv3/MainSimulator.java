@@ -154,9 +154,9 @@ public class MainSimulator {
                 System.out.println(Ansi.NPW+"Score : "+(get_points - suivi_penality)+" points"+Ansi.TVR);
             }
 
-            if(get_gear > gear_expected || get_gear < gear_expected){
-                System.out.println(Ansi.NRW+"Moteur cassé car vous étiez en "+get_gear+" alors que c'était "+gear_expected+" attendue !"+Ansi.TVR);
-            }
+            // if(get_gear > gear_expected || get_gear < gear_expected){
+            //     System.out.println(Ansi.NRW+"Moteur cassé car vous étiez en "+get_gear+" alors que c'était "+gear_expected+" attendue !"+Ansi.TVR);
+            // }
 
             DMW.SetSimulator(mark, model, power, get_gear, get_speed, (get_points - suivi_penality));
 
@@ -170,10 +170,33 @@ public class MainSimulator {
         }
     }
 
+    public static void DisplayInputs(){
+        String dtl = "+ deux chiffres";
+        String[] list_inputs = {
+            "[Z] Accelerer "+dtl,
+            "[D] Decelerer "+dtl,
+            "[F] Freiner "+dtl,
+            "[S] Marche arrière",
+            "[G] Boîte à vitesse "+dtl,
+            "[T] Tourner",
+            "[CL] Changer de voie à gauche/droite",
+            "[CA] Contrôle visibilité (Intérieur, extérieur, angles morts)",
+            "[TS] Clignotant à gauche/droite",
+            "[HL] Feu de croisement",
+            "[WW] Essuie-glace",
+            "[SD] Feu warning",
+            "[X] Arreter",
+            "[OK] Passer à l'étape suivante"
+        };
+        // int i = 0;
+        // myfunctions.rwkLoopArrays(list_inputs, "N°"+i+" | ");
+        myfunctions.rwkLoopArrays(list_inputs, "", false, "");
+    }
+
     public static boolean rwkSwitchCase(boolean CheckAll, boolean[] TurnSignals, boolean windshieldwiper){
         
         //CBB+TVI+TVR
-        String option = myfunctions.rwkTxtStringV2(" ", true, true);
+        String option = myfunctions.rwkTxtStringV2(Ansi.NWB+"Quelle(s) actions voulez-vous effectuer ?"+Ansi.TVR, true, true);
         
         myfunctions.rwkTxtStringV2("", false, false);
 
@@ -236,6 +259,9 @@ public class MainSimulator {
             case "H": DMW.Horn(); // Klaxon
             return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
+            case "W": DisplayInputs(); // All touches
+            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
+
             // case "W": DMW.AllInputs(); // voir pour mettre une listing de touche
             // return rwkSwitchCase(CheckAll, TurnSignals);
             case "X": DMW.Arrest(); // Arreter
@@ -243,7 +269,7 @@ public class MainSimulator {
             case "OK":;
             //return "Fin";
             return windshieldwiper;
-            default: myfunctions.rwkTxtStringV2("Veuillez répondre que par ???", false, true); 
+            default: myfunctions.rwkTxtStringV2("Veuillez répondre que par les touches listées via [w]", false, true); 
             return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper); //relancement de sécurité
         }
     }

@@ -38,10 +38,15 @@ public class myfunctions {
     }
 
     //Lister une arrays de A à Z grâce à length pour arrêter, peut être utile pour ajouter à tout moment
-    public static String rwkLoopArrays(String[] arrays){
+    public static String rwkLoopArrays(String[] arrays, String txt_before, boolean list_index, String txt_after){
         String result = "";
         for (int i = 0; i < arrays.length; i++){
-            result += rwkTxtStringV2("N°"+i+" | "+arrays[i]+"", false, false);
+            if(list_index){ // indique le numéro chaque ligne
+                result += rwkTxtStringV2(Ansi.NWB+txt_before+i+txt_after+arrays[i]+Ansi.TVR, false, false);
+            }else{
+                result += rwkTxtStringV2(Ansi.NWB+txt_before+txt_after+arrays[i]+Ansi.TVR, false, false);
+            }
+            
         }
         return result;
     }
@@ -523,6 +528,7 @@ public class myfunctions {
     public static String rwkTxtStringV2(String prompt, boolean keyboard, boolean touppercase){ 
         Scanner sc = new Scanner(System.in);
         System.out.print(prompt+"\n");
+        //System.out.print(prompt);
         // Si clavier non attendu
         if(!keyboard){
             // retourne en MAJ si touppercase true ou en normal

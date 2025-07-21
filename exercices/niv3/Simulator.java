@@ -107,10 +107,6 @@ public class Simulator {
         return new boolean[] {ChangeLanes, wheel[0], wheel[1]};
     }
 
-
-
-
-
     public void Accelerate(int add_speed){
         int actual_spped = speed + add_speed;
 
@@ -125,9 +121,9 @@ public class Simulator {
         }else if(actual_spped > 50 && gear == 5){
             speed += add_speed;
         }else{
-            myfunctions.rwkTxtStringV2(Ansi.NBW+"Impossible, vitesse insufissante !"+Ansi.TVR, false, false);
+            myfunctions.rwkTxtStringV2(Ansi.NBW+"Impossible, vitesse incompatible !"+Ansi.TVR, false, false);
         }
-        myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes à "+speed+" KM/H !"+Ansi.TVR, false, false);
+        myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes à "+speed+" KM/H et en vitesse "+gear+" !"+Ansi.TVR, false, false);
     }
     public void Deccelerate(int newSpeed){
         speed -= newSpeed;
