@@ -107,71 +107,60 @@ public class Simulator {
         return new boolean[] {ChangeLanes, wheel[0], wheel[1]};
     }
 
-    public void Accelerate(int add_speed){
-        int actual_spped = speed + add_speed;
+    public void Speed(int speed_modified){
+        int actual_speed = speed + speed_modified;
+        myfunctions.rwkTxtStringV2(Ansi.NBW+"TEST "+(actual_speed)+" "+Ansi.TVR, false, false);
 
-        if(actual_spped > 0 && actual_spped <= 20 && gear == 1){
-            speed += add_speed;
-        }else if(actual_spped > 20 && actual_spped <= 30 && gear == 2){
-            speed += add_speed;
-        }else if(actual_spped > 30 && actual_spped <= 40 && gear == 3){
-            speed += add_speed;
-        }else if(actual_spped > 40 && actual_spped <= 50 && gear == 4){
-            speed += add_speed;
-        }else if(actual_spped > 50 && gear == 5){
-            speed += add_speed;
+        if(actual_speed >= 0 && actual_speed <= 20 && gear == 1){
+            speed += speed_modified;
+        }else if(actual_speed > 20 && actual_speed <= 30 && gear == 2){
+            speed += speed_modified;
+        }else if(actual_speed > 30 && actual_speed <= 40 && gear == 3){
+            speed += speed_modified;
+        }else if(actual_speed > 40 && actual_speed <= 50 && gear == 4){
+            speed += speed_modified;
+        }else if(actual_speed > 50 && gear == 5){
+            speed += speed_modified;
         }else{
             myfunctions.rwkTxtStringV2(Ansi.NBW+"Impossible, vitesse incompatible !"+Ansi.TVR, false, false);
         }
         myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes à "+speed+" KM/H et en vitesse "+gear+" !"+Ansi.TVR, false, false);
     }
-    public void Deccelerate(int newSpeed){
-        speed -= newSpeed;
-        myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes à "+speed+" KM/H !"+Ansi.TVR, false, false);
-    }
-    public void Brake(int newSpeed){
-        speed -= newSpeed;
-        myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes à "+speed+" KM/H !"+Ansi.TVR, false, false);
-    }
 
     public void Arrest(){
-        speed = 0;
-        myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes à l'arrêt !"+Ansi.TVR, false, false);
+        speed = 0; gear = 0;
+        myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes à l'arrêt donc vous êtes à "+speed+" KM/H et en vitesse "+gear+" !"+Ansi.TVR, false, false);
     }
-
 
     public static void ToMoveBack(){}
 
     public void Gearbox(int newSpeed){
-        String status_gear = "";
-        myfunctions.rwkTxtStringV2("newSpeed "+newSpeed, false, false);
-
-        //if(newSpeed == 1 && 10 <= speed){
-        if(newSpeed == 1){
+        String status_gear = ""; String spd = "vitesse";
+        if(newSpeed == 0){
+            gear = 0;
+            status_gear = "point mort";
+        }else if(newSpeed == 1){
             gear = 1;
-            status_gear = "1er";
-        } else if(newSpeed == 2 && speed > 10 && 20 <= speed){
+            status_gear = "1er "+spd;
+        }else if(newSpeed == 2 && speed > 10 && 20 <= speed){
             gear = 2;
-            status_gear = "2ème";
-        } else if(newSpeed == 3 && speed > 20 && 30 <= speed){
+            status_gear = "2ème "+spd;
+        }else if(newSpeed == 3 && speed > 20 && 30 <= speed){
             gear = 3;
-            status_gear = "3ème";
-        } else {
+            status_gear = "3ème "+spd;
+        }else if(newSpeed == 4 && speed > 30 && 40 <= speed){
+            gear = 4;
+            status_gear = "4ème "+spd;
+        }else if(newSpeed == 5 && speed > 40){
+            gear = 5;
+            status_gear = "5ème "+spd;
+        }else{
             myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous ne pouvez pas changer de vitesse"+Ansi.TVR, false, false);
         }
 
-        myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes en "+status_gear+" vitesse"+Ansi.TVR, false, false);
-
-        //gear ++;
-        //myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes en "+gear+"(1er)ème vitesse"+Ansi.TVR, false, false);
+        myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes en "+status_gear+" (V"+gear+")"+Ansi.TVR, false, false);
     }
-
-    // public void Downgrade(){
-    //     gear --;
-    //     myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes en "+gear+"(1er)ème vitesse"+Ansi.TVR, false, false);
-
-    // }
-
+    
     public boolean WindshieldWiper(boolean windshieldwiper){
         myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous avez activé les essuies-glaces."+Ansi.TVR, false, false);
         return windshieldwiper = true;
