@@ -22,79 +22,93 @@ public class MainSimulator {
             //{"Notification : Vous êtes sur une route limité à 30 km/h",
             //0,   0, ""},
             {"Notification : Vous êtes sur une route limité à 30 km/h \n 1. Démarrer la voiture",     
-            30,    3,    ""},
+            30,    3,    ""}, // none
             {"2. Continuer tout droit",     
-            30,    3,    ""},
+            30,    3,    ""}, // none
             {"3. Ralentir puis tourner à gauche (vous êtes prioritaire)",     
-            30,    2,   ""},
+            30,    2,   ""}, // priority - turn left
             {"4. Continuer tout droit (Il y a une voiture sur l'intersection à droite, vous n'êtes pas prioritaire)",    
-            30,    2,   ""},
-            {"5. Attention, il y a un dos d'âne !",     
-            20,    2,   ""},
+            0,    0,   ""}, // not priority - arrest
+
+            {"5. Attention, il y a un dos d'âne !",
+            // * - Ne pas ralentir avant un dos d'âne : -2 points
+            20,    2,   ""}, // speed bumps
+            
             {"6. Continuer tout droit",     
-            30,    3,   ""},
+            30,    3,   ""}, // none
+
             {"7. Il y a un feu rouge, quand il passera au vert, tourner à droite sur l'avenue des Champs-Élysées",     
-            30,    2,   ""},
-            {"Notification : Vous êtes sur une route limité à 50 km/h",     
-            50,    4,   ""},
-            {"8. Continuer tout droit",     
-            50,    4,   ""},
+            30,    2,   ""}, // arrest - demarred - turn right
+            // * - Brûler un feu orange : -5 points
+
+            {"Notification : Vous êtes sur une route limité à 50 km/h \n 8. Continuer tout droit",     
+            50,    4,   ""}, // none
+            //{"8. Continuer tout droit",     
+            //50,    4,   ""}, // none
             {"9. Au rond point tourner à gauche",     
-            50,    3,   ""},
+            50,    3,   ""}, // turn left
             {"10. Continuer tout droit ",     
-            50,    4,   ""},
-            {"11. Attention, des piétons traversent",     
-            50,    3,   ""},
+            50,    4,   ""}, // none
+
+            {"11. Attention, des piétons traversent",
+            50,    3,   ""}, 
+            // * - Ne pas céder le passage : -3 points
+
             {"12. Continuer tout droit",     
             50,    4,   ""},
             {"13. Il y a un feu orange, ralentir, attendre que le feu soit rouge et tourner à gauche sur la voie d'insertion du Périphérique",     
             50,    2,   ""},
-            {"Notification : Vous êtes sur le Périphérique, limité à 70 km/h",     
-            70,    5,   ""},
-            {"14. Continuer tout droit",     
-            70,    5,   ""},
+            // * - Brûler un feu orange : -5 points
+
+            {"Notification : Vous êtes sur le Périphérique, limité à 70 km/h \n 14. Continuer tout droit",     
+            70,    5,   ""}, // none
+            //{"14. Continuer tout droit",     
+            //70,    5,   ""}, // none
             {"15. Vous êtes sur la voie de droite, une voiture devant vous est trop lente, dépasser la voiture",     
-            70,    5,   ""},
+            70,    5,   ""}, // change lane turn left
             {"16. Attention, il y a un bouchon, veuillez ralentir , prévenir les autres conducteurs à l'arrière, puis s'arrêter",     
-            70,    0,   ""},
+            0,    0,   ""}, // signals detress - arrest
             {"17. Insérer vous dans la voie de droite, pour prendre la sortie A6",     
-            70,    4,   ""},
-            {"18. Continuer tout droit, vous rendrez dans un tunnel",     
+            70,    4,   ""}, // change lane right
+
+            {"18. Continuer tout droit, vous rendrez dans un tunnel",
             70,    5,   ""},
-            {"Notification : Vous êtes sur une route limité à 110 km/h.",    
-            110,   5,   ""},
-            {"19. Continuer tout droit sur 10 km",     
-            110,   5,   ""},
+            // * - Ne pas mettre de feu de croisement dans un tunnel : -2 points
+
+            {"Notification : Vous êtes sur une route limité à 110 km/h. \n 19. Continuer tout droit sur 10 km",    
+            110,   5,   ""}, // none
+            // {"19. Continuer tout droit sur 10 km",     
+            // 110,   5,   ""}, // none
             {"20. Vous êtes sur la voie de droite, un véhicule de police cherche à vous dépasser, laisser passer le véhicule en vous débordant sur la gauche",     
-            110,   5,   ""},
+            110,   5,   ""}, // change lane left
             {"21. Continuer tout droit",    
-            110,   5,   ""},
+            110,   5,   ""}, // none
             {"22. Prenez la sortie en direction de Orly",     
-            110,   4,   ""},
-            {"Notification : Vous êtes sur une route limité à 50 km/h",     
-            50,    4,   ""},
-            {"23. Continuer tout droit",     
-            50,    4,   ""},
+            110,   4,   ""}, // change lane right
+            {"Notification : Vous êtes sur une route limité à 50 km/h \n 23. Continuer tout droit",     
+            50,    4,   ""}, // none
+            // {"23. Continuer tout droit",     
+            // 50,    4,   ""}, // none
             {"24. Tournez à droite en direction de l'aéroport d'Orly",     
-            50,    2,   ""},
-            {"Notification : Vous êtes sur une route limité à 30 km/h",     
-            30,    3,   ""},
-            {"25. Continuer tout droit après le rond-point",     
-            30,    3,   ""},
+            50,    2,   ""}, // turn right
+            {"Notification : Vous êtes sur une route limité à 30 km/h \n 25. Continuer tout droit après le rond-point",     
+            30,    3,   ""}, // none
+            // {"25. Continuer tout droit après le rond-point",     
+            // 30,    3,   ""}, // none
             {"26. Virer à droite pour entrer dans le parking",     
-            30,    2,   ""},
+            30,    2,   ""}, // turn right
             {"27. Garez la voiture en marche arrière",     
-            30,    2,   ""},
-            {"28. Couper le moteur",     
-            0,     0,   ""}
+            30,    2,   ""}, // marche arrière
+            {"28. Couper le moteur car vous êtes arrivé(e) !!!",
+            0,     0,   ""} // arrest
         };
 
-        for (int i = 0; i < list_simulator.length; i++) {
+        myfunctions.rwkTxtStringV2("\n"+Ansi.NPW+"Score : "+(points)+" points"+Ansi.TVR, false, false);
 
-            myfunctions.rwkTxtStringV2("\n"+Ansi.NPW+"Score : "+(points)+" points."+Ansi.TVR, false, false);
+        for (int i = 0; i < list_simulator.length; i++) {
             //Instruction donnée
             //0.instructions, 1.speed, 2.gear, 3.expected_actions
-            System.out.println("\n"+Ansi.NWB+list_simulator[i][0]+Ansi.TVR);
+            System.out.println(Ansi.NWB+list_simulator[i][0]+Ansi.TVR);
             int speed_limited = (int) list_simulator[i][1];
             int gear_expected = (int) list_simulator[i][2];
 
@@ -116,7 +130,8 @@ public class MainSimulator {
             int get_points = (int) get_simulator[5];
 
             int suivi_penality = 0;
-            myfunctions.rwkTxtStringV2("CHECK POINTS "+get_points, false, false);
+
+            //myfunctions.rwkTxtStringV2("CHECK POINTS "+get_points, false, false);
 
             //System.out.println("Vitesse actuelle : "+speed+" KM/H");
             
@@ -127,7 +142,7 @@ public class MainSimulator {
                 if(!windshieldwiper){
                     suivi_penality = 5;
                     myfunctions.rwkTxtStringV2(Ansi.NRW+"Ne pas activer les essuie-glaces en cas de pluie : -5 points"+Ansi.TVR, false, false);
-                    myfunctions.rwkTxtStringV2(Ansi.NPW+"Score "+(get_points - suivi_penality)+" points."+Ansi.TVR, false, false);
+                    myfunctions.rwkTxtStringV2(Ansi.NPW+"Score : "+(get_points - suivi_penality)+" points"+Ansi.TVR, false, false);
 
                 }   
             }
@@ -136,7 +151,7 @@ public class MainSimulator {
                 suivi_penality = 2;
                 System.out.println(Ansi.NRW+"Limitation à "+speed_limited+" KM/H non respectée car vous êtes à "+get_speed+" KM/H !"+Ansi.TVR);
                 System.out.println(Ansi.NRW+"Excès de vitesse +5 km/h : -2 points."+Ansi.TVR);
-                System.out.println(Ansi.NPW+"Score "+(get_points - suivi_penality)+" points."+Ansi.TVR);
+                System.out.println(Ansi.NPW+"Score : "+(get_points - suivi_penality)+" points"+Ansi.TVR);
             }
 
             if(get_gear > gear_expected || get_gear < gear_expected){
@@ -149,9 +164,9 @@ public class MainSimulator {
 
             Object[] check_simulator = DMW.GetSimulator();
             int check_points = (int) check_simulator[5];
-            myfunctions.rwkTxtStringV2("CHECK POINTS "+check_points, false, false);
+            //myfunctions.rwkTxtStringV2("CHECK POINTS "+check_points, false, false);
         
-            myfunctions.rwkTxtStringV2("Nous allons passer à l'instruction suivante ", false, false);
+            myfunctions.rwkTxtStringV2(Ansi.NGW+Ansi.CWT+"Nous allons passer à l'instruction suivante"+Ansi.TVR, false, false);
         }
     }
 
@@ -192,16 +207,7 @@ public class MainSimulator {
             case "S": DMW.ToMoveBack(); // Marche arrière
             return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
-            case "CE": DMW.ClutchEnabled(); // Embrayer Clutch Enabled
-            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
-
-            case "CD": DMW.ClutchDisabled(); // Débrayer Clutch Disabled
-            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
-
-            case "UG": DMW.Upgrade(); // upgrader
-            return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
-
-            case "DG": DMW.Downgrade(); // retrograder
+            case "G": DMW.Gearbox(newSpeed); // boîte à vitesse
             return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "T": DMW.Turn(CheckAll, TurnSignals); // Virer gauche/droite
@@ -221,7 +227,7 @@ public class MainSimulator {
             case "HL": DMW.Headlights(); // Feu de croisement
             return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
-            case "WW": windshieldwiper = DMW.WindshieldWiper(); // Essuie-glace
+            case "WW": windshieldwiper = DMW.WindshieldWiper(false); // Essuie-glace
             return rwkSwitchCase(CheckAll, TurnSignals, windshieldwiper);
 
             case "SD": DMW.SignalsDetress(); // Feu warning
