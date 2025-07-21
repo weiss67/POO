@@ -107,8 +107,26 @@ public class Simulator {
         return new boolean[] {ChangeLanes, wheel[0], wheel[1]};
     }
 
-    public void Accelerate(int newSpeed){
-        speed += newSpeed;
+
+
+
+
+    public void Accelerate(int add_speed){
+        int actual_spped = speed + add_speed;
+
+        if(actual_spped > 0 && actual_spped <= 20 && gear == 1){
+            speed += add_speed;
+        }else if(actual_spped > 20 && actual_spped <= 30 && gear == 2){
+            speed += add_speed;
+        }else if(actual_spped > 30 && actual_spped <= 40 && gear == 3){
+            speed += add_speed;
+        }else if(actual_spped > 40 && actual_spped <= 50 && gear == 4){
+            speed += add_speed;
+        }else if(actual_spped > 50 && gear == 5){
+            speed += add_speed;
+        }else{
+            myfunctions.rwkTxtStringV2(Ansi.NBW+"Impossible, vitesse insufissante !"+Ansi.TVR, false, false);
+        }
         myfunctions.rwkTxtStringV2(Ansi.NBW+"Vous êtes à "+speed+" KM/H !"+Ansi.TVR, false, false);
     }
     public void Deccelerate(int newSpeed){
@@ -130,8 +148,10 @@ public class Simulator {
 
     public void Gearbox(int newSpeed){
         String status_gear = "";
+        myfunctions.rwkTxtStringV2("newSpeed "+newSpeed, false, false);
 
-        if(newSpeed == 1 && 10 <= speed){
+        //if(newSpeed == 1 && 10 <= speed){
+        if(newSpeed == 1){
             gear = 1;
             status_gear = "1er";
         } else if(newSpeed == 2 && speed > 10 && 20 <= speed){
