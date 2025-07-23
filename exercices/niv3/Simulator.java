@@ -136,7 +136,10 @@ public class Simulator {
 
     public void Gearbox(int newSpeed){
         String status_gear = ""; String spd = "vitesse";
-        if(newSpeed == 0){
+        if(newSpeed == -1){
+            gear = -1;
+            status_gear = "R";
+        }else if(newSpeed == 0){
             gear = 0;
             status_gear = "point mort";
         }else if(newSpeed == 1){

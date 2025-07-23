@@ -14,93 +14,73 @@ public class MainSimulator {
         int gear = 0; int speed = 0; int points = 40;
         DMW = new Simulator(mark, model, power, gear, speed, points);
 
-        //Object  String ???
         Object[][] list_simulator = {
             // instructions, expected_actions
 
-            // instructions, speed, gear, expected_actions
-            //{"Notification : Vous êtes sur une route limité à 30 km/h",
-            //0,   0, ""},
+            // instructions, speed, gear, situation, expected_actions
             {"Notification : Vous êtes sur une route limité à 30 km/h \n 1. Démarrer la voiture",     
-            30,    3,    ""}, // none
+            30,    3,    null, new String[]{"action1", "action2"}},
             {"2. Continuer tout droit",     
-            30,    3,    ""}, // none
+            30,    3,    null, new String[]{"action1", "action2"}},
             {"3. Ralentir puis tourner à gauche (vous êtes prioritaire)",     
-            30,    2,   ""}, // priority - turn left
+            30,    2,   null, new String[]{"action1", "action2"}}, // turn left
             {"4. Continuer tout droit (Il y a une voiture sur l'intersection à droite, vous n'êtes pas prioritaire)",    
-            0,    0,   ""}, // not priority - arrest
-
+            0,    1,   "priority", new String[]{"action1", "action2"}}, // arrest
             {"5. Attention, il y a un dos d'âne !",
             // * - Ne pas ralentir avant un dos d'âne : -2 points
-            20,    2,   ""}, // speed bumps
-            
+            20,    2,   "speed_bumps", new String[]{"action1", "action2"}}, // demarred
             {"6. Continuer tout droit",     
-            30,    3,   ""}, // none
-
+            30,    3,   null, new String[]{"action1", "action2"}}, // none
             {"7. Il y a un feu rouge, quand il passera au vert, tourner à droite sur l'avenue des Champs-Élysées",     
-            30,    2,   ""}, // arrest - demarred - turn right
+            30,    2,   "traffic_lights", new String[]{"action1", "action2"}}, // arrest - demarred - turn right
             // * - Brûler un feu orange : -5 points
-
             {"Notification : Vous êtes sur une route limité à 50 km/h \n 8. Continuer tout droit",     
-            50,    4,   ""}, // none
-            //{"8. Continuer tout droit",     
-            //50,    4,   ""}, // none
+            50,    4,   null, new String[]{"action1", "action2"}}, // none
             {"9. Au rond point tourner à gauche",     
-            50,    3,   ""}, // turn left
+            30,    2,   null, new String[]{"action1", "action2"}}, // turn left
             {"10. Continuer tout droit ",     
-            50,    4,   ""}, // none
-
+            50,    5,   null, new String[]{"action1", "action2"}}, // none
             {"11. Attention, des piétons traversent",
-            50,    3,   ""}, 
+            00,    1,   "pedestrian_crossing", new String[]{"action1", "action2"}}, // arrest
             // * - Ne pas céder le passage : -3 points
-
             {"12. Continuer tout droit",     
-            50,    4,   ""},
+            50,    5,   null, new String[]{"action1", "action2"}},
             {"13. Il y a un feu orange, ralentir, attendre que le feu soit rouge et tourner à gauche sur la voie d'insertion du Périphérique",     
-            50,    2,   ""},
+            00,    1,   "traffic_lights", new String[]{"action1", "action2"}}, // arrest - turn left
             // * - Brûler un feu orange : -5 points
-
             {"Notification : Vous êtes sur le Périphérique, limité à 70 km/h \n 14. Continuer tout droit",     
-            70,    5,   ""}, // none
-            //{"14. Continuer tout droit",     
-            //70,    5,   ""}, // none
+            70,    5,   null, new String[]{"action1", "action2"}}, // none   
             {"15. Vous êtes sur la voie de droite, une voiture devant vous est trop lente, dépasser la voiture",     
-            70,    5,   ""}, // change lane turn left
+            70,    5,   null, new String[]{"action1", "action2"}}, // change lane turn left
             {"16. Attention, il y a un bouchon, veuillez ralentir , prévenir les autres conducteurs à l'arrière, puis s'arrêter",     
-            0,    0,   ""}, // signals detress - arrest
-            {"17. Insérer vous dans la voie de droite, pour prendre la sortie A6",     
-            70,    4,   ""}, // change lane right
+            00,    0,   null, new String[]{"action1", "action2"}}, // signals detress - arrest
+            {"17. Ça avance doucement, insérez-vous dans la voie de droite, pour prendre la sortie A6",     
+            70,    4,   null, new String[]{"action1", "action2"}}, // change lane right
 
             {"18. Continuer tout droit, vous rendrez dans un tunnel",
-            70,    5,   ""},
+            70,    5,   "tunnel", new String[]{"action1", "action2"}}, // tunnel
             // * - Ne pas mettre de feu de croisement dans un tunnel : -2 points
 
             {"Notification : Vous êtes sur une route limité à 110 km/h. \n 19. Continuer tout droit sur 10 km",    
-            110,   5,   ""}, // none
-            // {"19. Continuer tout droit sur 10 km",     
-            // 110,   5,   ""}, // none
+            110,   5,   null, new String[]{"action1", "action2"}}, // none
             {"20. Vous êtes sur la voie de droite, un véhicule de police cherche à vous dépasser, laisser passer le véhicule en vous débordant sur la gauche",     
-            110,   5,   ""}, // change lane left
+            110,   5,   null, new String[]{"action1", "action2"}}, // change lane left
             {"21. Continuer tout droit",    
-            110,   5,   ""}, // none
+            110,   5,   null, new String[]{"action1", "action2"}}, // none
             {"22. Prenez la sortie en direction de Orly",     
-            110,   4,   ""}, // change lane right
+            110,   4,   null, new String[]{"action1", "action2"}}, // change lane right
             {"Notification : Vous êtes sur une route limité à 50 km/h \n 23. Continuer tout droit",     
-            50,    4,   ""}, // none
-            // {"23. Continuer tout droit",     
-            // 50,    4,   ""}, // none
+            50,    4,   null, new String[]{"action1", "action2"}}, // none  
             {"24. Tournez à droite en direction de l'aéroport d'Orly",     
-            50,    2,   ""}, // turn right
+            50,    2,   null, new String[]{"action1", "action2"}}, // turn right
             {"Notification : Vous êtes sur une route limité à 30 km/h \n 25. Continuer tout droit après le rond-point",     
-            30,    3,   ""}, // none
-            // {"25. Continuer tout droit après le rond-point",     
-            // 30,    3,   ""}, // none
+            30,    3,   null, new String[]{"action1", "action2"}}, // none
             {"26. Virer à droite pour entrer dans le parking",     
-            30,    2,   ""}, // turn right
+            30,    2,   null, new String[]{"action1", "action2"}}, // turn right
             {"27. Garez la voiture en marche arrière",     
-            30,    2,   ""}, // marche arrière
+            30,    2,   null, new String[]{"action1", "action2"}}, // move_back
             {"28. Couper le moteur car vous êtes arrivé(e) !!!",
-            0,     0,   ""} // arrest
+            0,     0,   null, new String[]{"action1", "action2"}} // arrest
         };
 
         myfunctions.rwkTxtStringV2("\n"+Ansi.NPW+"Score : "+(points)+" points"+Ansi.TVR, false, false);
@@ -111,6 +91,8 @@ public class MainSimulator {
             System.out.println(Ansi.NWB+list_simulator[i][0]+Ansi.TVR);
             int speed_limited = (int) list_simulator[i][1];
             int gear_expected = (int) list_simulator[i][2];
+            String situation = (String) list_simulator[i][3]; // priority, traffic_lights, speed_bumps, tunnel, pedestrian_crossing
+            String[] expected_actions = (String[]) list_simulator[i][4]; // récupère toutes les actions attendues et checkées
 
             // random rainning (pluie aléatoire pour chaque action)
             boolean rainning = false; Random random = new Random();
@@ -122,6 +104,8 @@ public class MainSimulator {
             // new = création d'un nouveau tableau
             boolean windshieldwiper = rwkSwitchCase(false, new boolean[]{false, false, false}, false);
 
+            // actions_completed à récuperer
+
             // récupère les données des attributs
             //0.mark, 1.model, 2.power, 3.gear, 4.speed, 5.points
             Object[] get_simulator = DMW.GetSimulator();
@@ -129,12 +113,12 @@ public class MainSimulator {
             int get_speed = (int) get_simulator[4];
             int get_points = (int) get_simulator[5];
 
-            int suivi_penality = 0;
+            int suivi_penality = 0; // Check toutes les erreurs et accumule les points pour appliquer le total
             
             if(rainning){ // baisse de 10 kilomètre la limitation en cas de pluie
-                if(speed_limited >= 10){ // vérifie si bien minimum 10KM/H
+                if(speed_limited == 110){ // vérifie si bien minimum 110KM/H pour voie rapide
                     speed_limited -= 10;
-                }
+                } // prévoir si autoroute, 130 - 20 pour 110 si nouvelle instruction ajoutée
                 if(!windshieldwiper){
                     suivi_penality = 5;
                     myfunctions.rwkTxtStringV2(Ansi.NRW+"Ne pas activer les essuie-glaces en cas de pluie : -5 points"+Ansi.TVR, false, false);
