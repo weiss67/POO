@@ -109,8 +109,6 @@ public class Simulator {
 
     public void Speed(int speed_modified){
         int actual_speed = speed + speed_modified;
-        myfunctions.rwkTxtStringV2(Ansi.NBW+"TEST "+(actual_speed)+" "+Ansi.TVR, false, false);
-
         if(actual_speed >= 0 && actual_speed <= 20 && gear == 1){
             speed += speed_modified;
         }else if(actual_speed > 20 && actual_speed <= 30 && gear == 2){
